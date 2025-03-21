@@ -8,12 +8,10 @@ const userSchema = new mongoose.Schema({
         minlength: 2,
         maxlength: 50,
         validate: {
-            validate: {
-                validator: function(name) {
-                    return /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s']+$/.test(name);
-                },
-                message: "The name must contain only letters and spaces"
-            }
+            validator: function(name) {
+                return /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s']+$/.test(name);
+            },
+            message: "The name must contain only letters and spaces"
         }
     },
     email: {
@@ -28,10 +26,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
         minlength: 6,
-        maxlength: 40
+        maxlength: 150
     }
 }, { timestamps: true });
 
-const User = mongoose.model('User', userSchema);
+const User = mongoose.model("User", userSchema);
 
 export default User;
