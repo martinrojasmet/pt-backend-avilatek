@@ -2,27 +2,18 @@ import { Router } from "express";
 import authorizeAdmin from "../middlewares/admin.middleware.js";
 import authorizeClient from "../middlewares/client.middleware.js";
 import authorizeUser from "../middlewares/authorize.middleware.js";
+import { createProduct, deleteProduct, getAllProducts, getProduct, updateProduct } from "../controllers/product.controller.js";
 
 const productRouter = Router();
 
-productRouter.get('/', authorizeUser, (req, res) => {
-    res.send('GET all products');
-});
+productRouter.get('/', authorizeUser, getAllProducts);
 
-productRouter.get('/:id', authorizeUser, (req, res) => {
-    res.send('GET product by id');
-});
+productRouter.get('/:id', authorizeUser, getProduct);
 
-productRouter.post('/', authorizeUser, authorizeAdmin, (req, res) => {
-    res.send('CREATE product');
-});
+productRouter.post('/', authorizeUser, authorizeAdmin, createProduct);
 
-productRouter.put('/:id', authorizeUser, authorizeAdmin, (req, res) => {
-    res.send('UPDATE product');
-});
+productRouter.put('/:id', authorizeUser, authorizeAdmin, updateProduct);
 
-productRouter.delete('/:id', authorizeUser, authorizeAdmin, (req, res) => {
-    res.send('DELETE product');
-});
+productRouter.delete('/:id', authorizeUser, deleteProduct);
 
 export default productRouter;

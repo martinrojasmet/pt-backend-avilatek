@@ -9,7 +9,6 @@ export const signUp = async (req, res, next) => {
     const session = await mongoose.startSession();
     session.startTransaction();
     try {
-        console.log(req.body);
         const { name, email, password } = req.body;
 
         // Check if user email already exists
@@ -78,7 +77,6 @@ export const signIn = async (req, res, next) => {
         next(error);
     }
 };
-
 
 // export const signUp = (req, res) => res.send('SignUp');
 // export const signIn = (req, res) => res.send('SignIn');
