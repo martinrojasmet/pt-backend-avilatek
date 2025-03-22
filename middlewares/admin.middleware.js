@@ -4,19 +4,18 @@ const authorizeAdmin = async (req, res, next) => {
         const user = req.user;
 
         if (user.role !== 'admin') {
-            res.status(401).json({
-                success: false,
-                error: 'User is not admin'
-            });
+            const error = new Error('User is not admin');
+            error.statusCode = 401;
+            throw error;
         }
 
         next();
         
     } catch (error) {
-        res.status(401).json({
-            success: false,
-            error: 'Unauthorized'
-        });
+        if (!error.statusCode) {
+            error.statusCode = 401;
+        }
+        next(error);
     }
 };
 

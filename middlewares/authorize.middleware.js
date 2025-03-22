@@ -11,10 +11,9 @@ const authorizeUser = async (req, res, next) => {
         }
 
         if (!token) {
-            res.status(401).json({
-                success: false,
-                error: 'No token provided'
-            });
+            const error = new Error('No token provided');
+            error.statusCode = 401;
+            throw error;
         }
 
         const decoded = jwt.verify(token, JWT_SECRET);
@@ -22,10 +21,9 @@ const authorizeUser = async (req, res, next) => {
         const user = await User.findById(userId);
 
         if (!user) {
-            res.status(401).json({
-                success: false,
-                error: 'User not found'
-            });
+            const error = new Error('User not found');
+            error.statusCode = 401;
+            throw error;
         }
 
         req.user = user;
@@ -33,11 +31,10 @@ const authorizeUser = async (req, res, next) => {
 
         
     } catch (error) {
-        res.status(401).json({
-            success: false,
-            error: 'Unauthorized',
-            message: error.message
-        });
+        if (!error.statusCode) {
+            error.statusCode = 401;
+        }
+        next(error);
     }
 };
 
