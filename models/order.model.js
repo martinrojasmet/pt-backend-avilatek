@@ -13,6 +13,30 @@ const orderItemSchema = new mongoose.Schema({
     }
 }, { _id: false });
 
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Order:
+ *       title: 'Order'
+ *       required: [ 'user', 'items', 'status' ]
+ *       properties:
+ *         user: { type: 'string' }
+ *         items: 
+ *           type: 'array'
+ *           items: 
+ *             type: 'object'
+ *             properties:
+ *               product: { type: 'string' }
+ *               quantity: { type: 'number' }
+ *         status: 
+ *           type: 'string'
+ *           enum: ['Pending', 'Confirmed', 'Cancelled']
+ *         _id: { type: 'string' }
+ *         createdAt: { type: 'string', format: 'date-time' }
+ *         updatedAt: { type: 'string', format: 'date-time' }
+ */
 const orderSchema = new mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,

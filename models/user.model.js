@@ -1,5 +1,21 @@
 import mongoose from "mongoose";
 
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     User:
+ *       title: 'User'
+ *       required: [ 'name', 'email', 'password' ]
+ *       properties:
+ *         name: { type: 'string' }
+ *         email: { type: 'string' }
+ *         password: { type: 'string' }
+ *         role: { type: 'string' }
+ *         _id: { type: 'string' }
+ *         createdAt: { type: 'string', format: 'date-time' }
+ *         updatedAt: { type: 'string', format: 'date-time' }
+ */
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
