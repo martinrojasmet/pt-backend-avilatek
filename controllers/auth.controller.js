@@ -77,5 +77,3 @@ export const signIn = async (req, res, next) => {
         next(error);
     }
 };
-
-export const signOut = (req, res) => res.send('SignOut');

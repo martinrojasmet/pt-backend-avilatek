@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { signIn, signUp, signOut } from "../controllers/auth.controller.js";
+import { signIn, signUp } from "../controllers/auth.controller.js";
 
 const authRouter = Router();
 
@@ -138,6 +138,5 @@ authRouter.post('/sign-up', signUp);
  *               error: Error message
  */
 authRouter.post('/sign-in', signIn);
-authRouter.get('/sign-out', signOut);
 
 export default authRouter;
