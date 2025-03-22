@@ -5,7 +5,7 @@ const options = {
     definition: {
         openapi: "3.0.0",
         info: {
-            title: "E-commerce API",
+            title: "E-commerce API - PT Avila Tek",
             version: "1.0.0",
             contact: {
                 name: "Martin Rojas"
