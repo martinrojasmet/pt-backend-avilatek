@@ -55,6 +55,19 @@ export const getAllOrders = async (req, res, next) => {
     }
 };
 
+export const getAllOrdersUser = async (req, res, next) => {
+    try {
+        const Orders = await Order.find({ user: req.params.id }).select('-createdAt -updatedAt -__v');
+         
+        res.status(200).json({
+            success: true,
+            data: Orders
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
 export const getOrder = async (req, res, next) => {
     try {
         const order = await Order.findById(req.params.id).select('-createdAt -updatedAt -__v');
