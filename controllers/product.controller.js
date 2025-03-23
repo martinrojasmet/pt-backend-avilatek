@@ -34,11 +34,18 @@ export const createProduct = async (req, res, next) => {
 
 export const getAllProducts = async (req, res, next) => {
     try {
-        const Products = await Product.find().select('-createdAt -updatedAt -__v');
-         
+        const { limit = 2, cursor } = req.query;
+        const query = cursor ? { _id: { $gt: cursor } } : {};
+
+        const products = await Product.find(query)
+            .select('-createdAt -updatedAt -__v')
+            .limit(Number(limit))
+            .sort({ _id: 1 });
+
         res.status(200).json({
             success: true,
-            data: Products
+            data: products,
+            nextCursor: products.length ? products[products.length - 1]._id : null
         });
     } catch (error) {
         next(error);

@@ -44,11 +44,18 @@ export const createOrder = async (req, res, next) => {
 
 export const getAllOrders = async (req, res, next) => {
     try {
-        const Orders = await Order.find().select('-createdAt -updatedAt -__v');
-         
+        const { limit = 2, cursor } = req.query;
+        const query = cursor ? { _id: { $gt: cursor } } : {};
+
+        const orders = await Order.find(query)
+            .select('-createdAt -updatedAt -__v')
+            .limit(Number(limit))
+            .sort({ _id: 1 });
+
         res.status(200).json({
             success: true,
-            data: Orders
+            data: orders,
+            nextCursor: orders.length ? orders[orders.length - 1]._id : null
         });
     } catch (error) {
         next(error);
@@ -57,11 +64,20 @@ export const getAllOrders = async (req, res, next) => {
 
 export const getAllOrdersUser = async (req, res, next) => {
     try {
-        const Orders = await Order.find({ user: req.params.id }).select('-createdAt -updatedAt -__v');
-         
+        const { limit = 2, cursor } = req.query;
+        const query = cursor ? { user: req.params.id, _id: { $gt: cursor } } : { user: req.params.id };
+
+        const orders = await Order.find(query)
+            .select('-createdAt -updatedAt -__v')
+            .limit(Number(limit))
+            .sort({ _id: 1 });
+
+        console.log(orders);
+
         res.status(200).json({
             success: true,
-            data: Orders
+            data: orders,
+            nextCursor: orders.length ? orders[orders.length - 1]._id : null
         });
     } catch (error) {
         next(error);
@@ -113,6 +129,15 @@ export const deleteOrder = async (req, res, next) => {
     const session = await mongoose.startSession();
     session.startTransaction();
     try {
+
+        const order = await Order.findById(req.params.id);
+
+        for (let i = 0; i < order.items.length; i++) {
+            const product = await Product.findById(order.items[i].product);
+            product.stock += order.items[i].quantity;
+            await product.save({ session });
+        }
+
         const deletedOrder = await Order.findByIdAndDelete(req.params.id, { session });
 
         await session.commitTransaction();
@@ -205,7 +230,7 @@ export const confirmOrder = async (req, res, next) => {
 
         res.status(200).json({
             success: true,
-            message: "Order cancelled successfully",
+            message: "Order confirmed",
             data: updatedOrder
         });
     } catch (error) {

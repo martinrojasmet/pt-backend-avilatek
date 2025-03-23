@@ -33,6 +33,19 @@ const productRouter = Router();
  *     tags: [Products]
  *     security:
  *       - bearerAuth: []
+ *     parameters:
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *         required: false
+ *         description: Number of products to return
+ *       - in: query
+ *         name: cursor
+ *         schema:
+ *           type: string
+ *         required: false
+ *         description: Cursor for pagination
  *     responses:
  *       200:
  *         description: A list of products
@@ -40,6 +53,7 @@ const productRouter = Router();
  *           application/json:
  *             example:
  *               success: true
+ *               nextCursor: 67ddcf78dd99db2534b09b33
  *               data:
  *                 - _id: 67ddcf2ddd99db2534b09b2b
  *                   name: Mango

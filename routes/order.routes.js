@@ -34,6 +34,19 @@ const orderRouter = Router();
  *     tags: [Orders]
  *     security:
  *       - bearerAuth: []
+ *     parameters:
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *         required: false
+ *         description: Number of products to return
+ *       - in: query
+ *         name: cursor
+ *         schema:
+ *           type: string
+ *         required: false
+ *         description: Cursor for pagination
  *     responses:
  *       200:
  *         description: A list of orders
@@ -48,6 +61,7 @@ const orderRouter = Router();
  *                     - product: 67ddcf2ddd99db2534b09b2b
  *                       quantity: 6
  *                   status: Cancelled
+ *               nextCursor: 67defd2d70034e33a4ab9624
  *       401:
  *         description: Unauthorized
  *         content:
@@ -127,6 +141,18 @@ orderRouter.get('/:id', authorizeUser, authorizeOrder, getOrder);
  *     security:
  *       - bearerAuth: []
  *     parameters:
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *         required: false
+ *         description: Number of products to return
+ *       - in: query
+ *         name: cursor
+ *         schema:
+ *           type: string
+ *         required: false
+ *         description: Cursor for pagination
  *       - in: path
  *         name: id
  *         schema:
@@ -147,6 +173,7 @@ orderRouter.get('/:id', authorizeUser, authorizeOrder, getOrder);
  *                     - product: 67ddcf2ddd99db2534b09b2b
  *                       quantity: 6
  *                   status: Cancelled
+ *               nextCursor: 67defd2d70034e33a4ab9624
  *       401:
  *         description: Unauthorized
  *         content:
@@ -271,6 +298,8 @@ orderRouter.post('/', authorizeUser, createOrder);
  *             items:
  *               - product: 67ddcf78dd99db2534b09b33
  *                 quantity: 21
+ *             user: 67ddb76d2cbcd08d030e8d3d
+ *             status: Pending   
  *     responses:
  *       200:
  *         description: Order updated successfully
@@ -368,7 +397,7 @@ orderRouter.put('/:id', authorizeUser, authorizeAdmin, updateOrder);
  *               success: false
  *               error: Error message
  */
-orderRouter.delete('/:id', authorizeUser, deleteOrder);
+orderRouter.delete('/:id', authorizeUser, authorizeAdmin, deleteOrder);
 
 /**
  * @swagger

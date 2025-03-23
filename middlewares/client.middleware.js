@@ -5,7 +5,10 @@ const authorizeClient = async (req, res, next) => {
 
         const user = req.user;
 
-        if (!(user.role === 'admin' || user._id === userId)) {
+        console.log(user);
+        console.log(userId);
+
+        if (!(user.role === 'admin' || user._id.toString() === userId)) {
             const error = new Error('User is not authorized');
             error.statusCode = 401;
             throw error;
