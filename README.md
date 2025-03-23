@@ -26,7 +26,10 @@ Para utilizar los servicios:
 1. Realizar **SignUp** o **SignIn** para obtener un JWT (campo de token).  
 2. Incluir el token en el header `Authorization` de las solicitudes (bearer token).  
 
-El diagrama de la base de datos se encuentra en el archivo `DB Diagram.png`. Para acceder a la documentación detallada se debe ejecutar el proyecto y acceder al swagger:  
+#### **Base de datos**
+![DB Diagram](https://raw.githubusercontent.com/martinrojasmet/pt-backend-avilatek/refs/heads/main/DB%20Diagram.png)
+
+Para acceder a la documentación detallada se debe ejecutar el proyecto y acceder al swagger:  
 
 1. Crear un archivo `.env.production.local` en el root con:  
    ```env
@@ -37,10 +40,10 @@ El diagrama de la base de datos se encuentra en el archivo `DB Diagram.png`. Par
    JWT_EXPIRES_IN=1d
 (Envio por correo el URI de la BD y las credenciales del usuario administrador)
 
-2. npm install
+1. npm install
    
-3. npm start / npm run dev
+2. npm start / npm run dev
 
-4. http://localhost:3000/api/v1/swagger/
+3. http://localhost:3000/api/v1/swagger/
 
-5. Cualquier comentario o duda estoy atento :)
+4. Cualquier comentario o duda estoy atento :)
